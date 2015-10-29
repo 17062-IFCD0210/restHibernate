@@ -1,8 +1,26 @@
 package com.ipartek.formacion.ejemplos.RestMyKong.pojo;
 
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "perro")
 public class Perro {
 
+	@Id
+	@GeneratedValue
+	Long id;
+
+	@Basic
+	@Column(name = "nombre")
 	private String nombre;
+
+	@Basic
+	@Column(name = "raza")
 	private String raza;
 
 	/**
@@ -29,6 +47,14 @@ public class Perro {
 
 	public void setRaza(String raza) {
 		this.raza = raza;
+	}
+
+	public Long getId() {
+		return this.id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	@Override
