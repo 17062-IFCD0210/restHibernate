@@ -11,13 +11,13 @@ import com.ipartek.formacion.ejemplos.RestMyKong.pojo.Perro;
 
 @Path("/hello")
 public class HelloController {
-
 	@GET
-	@Path("/{param}")
 	@Produces(MediaType.APPLICATION_JSON)
+	@Path("/{param}")
 	public Response getMsg(@PathParam("param") String msg) {
 
 		String output = "Jersey say : " + msg;
+
 		return Response.status(200).entity(output).build();
 
 	}
@@ -27,7 +27,7 @@ public class HelloController {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getPerro(@PathParam("param") String msg) {
 
-		Perro perro = new Perro("Bubba", "Boxer");
+		Perro perro = new Perro("Lagun", "Americano");
 		return Response.status(200).entity(perro).build();
 
 	}
