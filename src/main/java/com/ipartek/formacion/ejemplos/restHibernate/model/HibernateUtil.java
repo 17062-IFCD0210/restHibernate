@@ -1,4 +1,4 @@
-package com.ipartek.formacion.ejemplos.RestMyKong.model;
+package com.ipartek.formacion.ejemplos.restHibernate.model;
 
 import org.hibernate.HibernateException;
 import org.hibernate.Session;

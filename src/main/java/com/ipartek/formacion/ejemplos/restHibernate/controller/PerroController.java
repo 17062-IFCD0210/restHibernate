@@ -1,4 +1,4 @@
-package com.ipartek.formacion.ejemplos.RestMyKong.controller;
+package com.ipartek.formacion.ejemplos.restHibernate.controller;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -15,8 +15,8 @@ import javax.ws.rs.core.Response;
 
 import org.hibernate.Session;
 
-import com.ipartek.formacion.ejemplos.RestMyKong.model.HibernateUtil;
-import com.ipartek.formacion.ejemplos.RestMyKong.pojo.Perro;
+import com.ipartek.formacion.ejemplos.restHibernate.model.HibernateUtil;
+import com.ipartek.formacion.ejemplos.restHibernate.pojo.Perro;
 
 /**
  * El poryecto hace refencia al proyecto skalada

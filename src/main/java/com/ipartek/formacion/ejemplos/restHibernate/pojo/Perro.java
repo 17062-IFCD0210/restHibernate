@@ -1,4 +1,4 @@
-package com.ipartek.formacion.ejemplos.RestMyKong.pojo;
+package com.ipartek.formacion.ejemplos.restHibernate.pojo;
 
 import javax.persistence.Basic;
 import javax.persistence.Column;

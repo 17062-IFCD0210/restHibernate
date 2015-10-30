@@ -1,11 +1,11 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>com.ipartek.formacion.ejemplos.RestMyKong</groupId>
-	<artifactId>RestMyKong</artifactId>
+	<groupId>com.ipartek.formacion.ejemplos.restHibernate</groupId>
+	<artifactId>restHibernate</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
-	<name>RestMyKong</name>
+	<name>restHibernate</name>
 	<description>Servicio Rest de Pruebas http://www.mkyong.com/webservices/jax-rs/jersey-hello-world-example/</description>
 	<properties>
      <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

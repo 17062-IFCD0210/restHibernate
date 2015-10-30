@@ -1,4 +1,4 @@
-package com.ipartek.formacion.ejemplos.RestMyKong.pojo;
+package com.ipartek.formacion.ejemplos.restHibernate.pojo;
 
 import java.util.ArrayList;
 
@@ -9,7 +9,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import com.ipartek.formacion.ejemplos.RestMyKong.model.HibernateUtil;
+import com.ipartek.formacion.ejemplos.restHibernate.model.HibernateUtil;
 
 public class TestPerro {
 	Perro p = new Perro();

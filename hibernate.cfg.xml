@@ -21,6 +21,6 @@
 		<property name="show_sql">true</property>
 		<!-- Drop and re-create the database schema on startup -->
 		<property name="hbm2ddl.auto">create</property>
-		<mapping class="com.ipartek.formacion.ejemplos.RestMyKong.pojo.Perro" />
+		<mapping class="com.ipartek.formacion.ejemplos.restHibernate.pojo.Perro" />
 	</session-factory>
 </hibernate-configuration>

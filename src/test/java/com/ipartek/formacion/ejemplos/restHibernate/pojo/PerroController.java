@@ -1,4 +1,4 @@
-package com.ipartek.formacion.ejemplos.RestMyKong.pojo;
+package com.ipartek.formacion.ejemplos.restHibernate.pojo;
 
 import org.junit.After;
 import org.junit.AfterClass;

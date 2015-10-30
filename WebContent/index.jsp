@@ -14,9 +14,15 @@
 	<div data-role="page" id="home">
 	
 		<div data-role="header">
-			<h2>Cabecera</h2>
+			<h2>Perrera</h2>
 		</div><!-- /header -->
 	
+		<div data-role="navbar">
+			<ul>
+				<li><a href="#crear" class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-plus">Crear nuevo perro</a></li>
+				<li><a href="#eliminar" class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-delete">Eliminar perro</a></li>
+			</ul>
+		</div>
 		<div data-role="main">
 			<ul data-role="listview" data-inset="true" data-filter="true">
 				<li><a href="#modificar">Buba</a></li>
@@ -39,8 +45,8 @@
 	<div data-role="page" id="modificar">
 	
 		<div data-role="header">
-			<a href="#home">Home</a>
-			<h2>Modificar-DEtalle</h2>
+			<a href="#home" class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-home">Home</a>
+			<h2>Modificar-Detalle</h2>
 		</div><!-- /header -->
 	
 		<div data-role="main">
@@ -55,7 +61,8 @@
 			
 			<a href="#" id ="botonModificar" 
 			   data-role="button"
-			    data-theme="e" 
+			    data-theme="e"
+			    class="ui-btn ui-shadow ui-corner-all ui-btn-icon-bottom ui-icon-edit" 
 			   >
 				Modificar
 			</a> 
@@ -65,6 +72,71 @@
 		
 	</div><!-- /page modificar -->
 	
+		<div data-role="page" id="crear">
+	
+		<div data-role="header">
+			<a href="#home" class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-home">Home</a>
+			<h2>Crear Perro</h2>
+		</div><!-- /header -->
+	
+		<div data-role="main">
+			
+			
+			<label for="nombre">Nombre:</label>
+			<input type="text" name="nombre" id="nombre">
+			
+			<label for="raza">Raza:</label>
+			<input type="text" name="raza" id="raza">
+			
+			
+			<a href="#" id ="botonCrear" 
+			   data-role="button"
+			    data-theme="e" 
+			    class="ui-btn ui-shadow ui-corner-all ui-btn-icon-bottom ui-icon-plus">
+			   >
+				Crear
+			</a> 
+		</div>
+		
+		
+		
+	</div><!-- /page crear -->
 
+		<div data-role="page" id="eliminar">
+	
+		<div data-role="header">
+			<a href="#home" class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-home">Home</a>
+			<h2>Eliminar Perro</h2>
+		</div><!-- /header -->
+	
+		<div data-role="main">
+			
+			<div class="ui-field-contain">
+				<label for="select-perro">Perro a eliminar:</label>
+				<select name="select-perro" id="select-perro">
+					<option value="1">Buba</option>
+					<option value="2">Canela</option>
+					<option value="3">Ribgo</option>
+					<option value="4">Sarpu</option>
+					<option value="5">LLIdo</option>
+					<option value="6">Puklgas</option>
+					<option value="6">Rabioso</option>
+				</select>
+				
+			</div>
+
+			
+			<a href="#" id ="botonEliminar" 
+			   data-role="button"
+			    data-theme="e" 
+			    class="ui-btn ui-shadow ui-corner-all ui-btn-icon-bottom ui-icon-delete"
+			   >
+				Eliminar
+			</a> 
+		</div>
+		
+		
+		
+	</div><!-- /page crear -->
 </body>
 </html>

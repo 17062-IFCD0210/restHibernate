@@ -1,4 +1,4 @@
-package com.ipartek.formacion.ejemplos.RestMyKong.controller;
+package com.ipartek.formacion.ejemplos.restHibernate.controller;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -7,7 +7,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import com.ipartek.formacion.ejemplos.RestMyKong.pojo.Perro;
+import com.ipartek.formacion.ejemplos.restHibernate.pojo.Perro;
 
 @Path("/hello")
 public class HelloController {
