@@ -40,7 +40,7 @@ public class PerroController {
 		ArrayList<Perro> perros = new ArrayList<Perro>();
 		// ModeloGrado mg = new ModeloGrado();
 		Session s = HibernateUtil.getSession();
-		perros = (ArrayList<Perro>) s.createQuery("from Perro").list();
+		perros = (ArrayList<Perro>) s.createCriteria(Perro.class).list();
 
 		System.out.println("GETALL:" + "Numero de perros en la perrera: "
 				+ perros.size());
