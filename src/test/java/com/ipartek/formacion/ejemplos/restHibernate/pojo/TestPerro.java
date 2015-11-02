@@ -94,7 +94,7 @@ public class TestPerro {
 
 		Perro pModificar = (Perro) this.s.get(Perro.class, 4);
 		pModificar.setNombre("Lagun Modificado");
-		pModificar.setRabo("Rabo Modificado");
+		pModificar.setRaza("Raza Modificado");
 		this.s.update(pModificar);
 
 	}
@@ -104,8 +104,8 @@ public class TestPerro {
 
 		Perro pPerro = (Perro) this.s.get(Perro.class, 4);
 
-		System.out.println("nombre: " + pPerro.getNombre() + "rabo: "
-				+ pPerro.getRabo());
+		System.out.println("nombre: " + pPerro.getNombre() + "raza: "
+				+ pPerro.getRaza());
 
 	}
 }

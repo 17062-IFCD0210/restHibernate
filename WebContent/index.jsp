@@ -11,21 +11,21 @@
 
 </head>
 <body>
-	<div data-role="page" id="home">
 
+
+<!-- page HOME -->
+	<div data-role="page" id="home">
 		<div data-role="header">
 			<h2>Perrera</h2>
 		</div>
-		<!-- /header -->
-
 		<div data-role="navbar">
 			<ul>
-				<li><a href="#crear"
-					class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-plus">Crear
-						nuevo perro</a></li>
-				<li><a href="#eliminar"
-					class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-delete">Eliminar
-						perro</a></li>
+				<li>
+					<a href="#crear" class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-plus">Crear nuevo perro</a>
+				</li>
+				<li>
+					<a href="#eliminar" class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-delete">Eliminar perro</a>
+				</li>
 			</ul>
 		</div>
 		<div data-role="main">
@@ -33,31 +33,31 @@
 				<li>Sin cargar perros</li>
 			</ul>
 		</div>
-
 		<div data-role="footer">Pie de pagina</div>
-
 	</div>
-	<!-- /page HOME -->
+<!-- /page HOME -->
 
-
+<!-- page MODIFICAR -->
 	<div data-role="page" id="modificar">
-
+	
 		<div data-role="header">
-			<a href="#home"
-				class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-home">Home</a>
+			<a href="#home" class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-home">Home</a>
 			<h2>Modificar-Detalle</h2>
 		</div>
-		<!-- /header -->
 
 		<div data-role="main">
-
-
-			<label for="nombre">Nombre:</label> <input type="text" name="nombre"
-				id="nombre" value=""> <label for="raza">Raza:</label> <input
-				type="text" name="raza" id="raza" value=""> <a href="#"
-				id="botonModificar" data-role="button" data-theme="e"
-				class="ui-btn ui-shadow ui-corner-all ui-btn-icon-bottom ui-icon-edit">
-				Modificar </a>
+		
+			<input type="hidden" name="id_modificar" id="id_modificar">
+		
+			<label for="nombre_modificar">Nombre:</label> 
+			<input type="text" name="nombre_modificar" id="nombre_modificar" value=""> 
+			
+			<label for="raza_modificar">Raza:</label> 
+			<input type="text" name="raza_modificar" id="raza_modificar" value=""> 
+			
+			<a href="#" id="botonModificar" data-role="button" data-theme="e" class="ui-btn ui-shadow ui-corner-all ui-btn-icon-bottom ui-icon-edit">
+				Modificar 
+			</a>
 		</div>
 
 
@@ -128,6 +128,8 @@
 	<script>
 		/* Antes de carga la HOME, llamar al servicio y rellenar lista */
 		var servicio = "//localhost:8080/restHibernate/service/";
+		var perros = [];
+		var perro_selec;
 
 		$(document).on("pageinit", "#home", function() {
 			console.debug('"pageinit": Home cargada');
@@ -136,11 +138,26 @@
 				var output = '';
 				$.each(data, function(index, value) {
 					output += '<li><a href="#">' + value.nombre + '</a></li>';
+					perros.push(value);
 				});
 				$('#perros_home').html(output).listview("refresh");
 			});
 
 		});
+		
+		/* Detectar click en listado perros HOME */
+		$('#perros_home').on('vclick', 'li', function(event){
+			perro_selec = perros[ $(this).index() ];
+			$.mobile.navigate("#modificar");
+		});
+		
+		$(document).on("pagebeforeshow", "#modificar", function(){
+			//rellenar dormulario con "perro_seleccionado"
+			$("#id_modificar").val(perro_selec.id);
+			$("#nombre_modificar").val(perro_selec.nombre);
+			$("#raza_modificar").val(perro_selec.raza);
+		});
+			
 	</script>
 
 

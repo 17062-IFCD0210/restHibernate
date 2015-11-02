@@ -21,23 +21,23 @@ public class Perro {
 	private String nombre;
 
 	@Basic
-	@Column(name = "rabo")
-	private String rabo;
+	@Column(name = "raza")
+	private String raza;
 
 	/**
 	 * @param nombre
-	 * @param rabo
+	 * @param raza
 	 */
-	public Perro(String nombre, String rabo) {
+	public Perro(String nombre, String raza) {
 		super();
 		this.nombre = nombre;
-		this.rabo = rabo;
+		this.raza = raza;
 	}
 
 	public Perro() {
 		super();
 		this.nombre = "";
-		this.rabo = "";
+		this.raza = "";
 	}
 
 	public String getNombre() {
@@ -56,17 +56,17 @@ public class Perro {
 		this.nombre = nombre;
 	}
 
-	public String getRabo() {
-		return this.rabo;
+	public String getRaza() {
+		return this.raza;
 	}
 
-	public void setRabo(String rabo) {
-		this.rabo = rabo;
+	public void setRaza(String raza) {
+		this.raza = raza;
 	}
 
 	@Override
 	public String toString() {
-		return "Perro [nombre=" + this.nombre + ", rabo=" + this.rabo + "]";
+		return "Perro [nombre=" + this.nombre + ", raza=" + this.raza + "]";
 	}
 
 }
