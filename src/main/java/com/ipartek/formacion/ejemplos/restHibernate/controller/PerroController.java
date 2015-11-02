@@ -69,8 +69,8 @@ public class PerroController {
 
 			Perro pPerro = (Perro) s.get(Perro.class, idPerro);
 
-			System.out.println("nombre: " + pPerro.getNombre() + "rabo: "
-					+ pPerro.getRabo());
+			System.out.println("nombre: " + pPerro.getNombre() + "raza: "
+					+ pPerro.getRaza());
 			s.beginTransaction().commit();
 			s.close();
 			return Response.status(200).entity(pPerro).build();
@@ -110,20 +110,20 @@ public class PerroController {
 	@Path("/{nombre}/{rabo}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response post(@PathParam("nombre") String nombrePerro,
-			@PathParam("rabo") String raboPerro) {
+			@PathParam("rabo") String razaPerro) {
 
 		try {
 			Session s = HibernateUtil.getSession();
 			s.beginTransaction();
-			Perro p7 = new Perro(nombrePerro, raboPerro);
+			Perro p7 = new Perro(nombrePerro, razaPerro);
 			s.save(p7);
 			s.beginTransaction().commit();
 			s.close();
 
 			return Response
 					.status(200)
-					.entity("creado:" + "nombre:" + nombrePerro + "rabo: "
-							+ raboPerro + this.date).build();
+					.entity("creado:" + "nombre:" + nombrePerro + "raza: "
+							+ razaPerro + this.date).build();
 
 		} catch (Exception e) {
 			return Response.status(500).build();
@@ -136,7 +136,7 @@ public class PerroController {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response put(@PathParam("id") int idPerro,
 			@PathParam("nombre") String nombrePerro,
-			@PathParam("rabo") String raboPerro) {
+			@PathParam("rabo") String razaPerro) {
 
 		try {
 			Session s = HibernateUtil.getSession();
@@ -147,7 +147,7 @@ public class PerroController {
 			}
 			Perro pModificar = (Perro) s.get(Perro.class, idPerro);
 			pModificar.setNombre(nombrePerro);
-			pModificar.setRabo(raboPerro);
+			pModificar.setRaza(razaPerro);
 			s.update(pModificar);
 			s.beginTransaction().commit();
 			s.close();
