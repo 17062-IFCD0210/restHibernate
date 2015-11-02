@@ -16,6 +16,7 @@ import javax.ws.rs.core.Response;
 import org.hibernate.Session;
 
 import com.ipartek.formacion.ejemplos.restHibernate.model.HibernateUtil;
+import com.ipartek.formacion.ejemplos.restHibernate.pojo.FechaHora;
 import com.ipartek.formacion.ejemplos.restHibernate.pojo.Perro;
 
 /**
@@ -36,25 +37,18 @@ public class PerroController {
 	 */
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getAll() {
-		
-		// ModeloGrado mg = new ModeloGrado();
-		Session s = HibernateUtil.getSession();
-		s.beginTransaction();
-		ArrayList<Perro> perros = (ArrayList<Perro>)s.createCriteria(Perro.class).list();
-		s.beginTransaction().commit();
-		s.close();
-
-		System.out.println("GETALL:" + "Numero de perros en la perrera: "
-				+ perros.size());
-		for (int i = 0; i < perros.size(); i++) {
-			System.out.println("Perro: " + i);
-			perros.get(i).toString();
+	public Response getAll() {		
+		try{
+			Session s = HibernateUtil.getSession();
+			s.beginTransaction();
+			ArrayList<Perro> perros = (ArrayList<Perro>)s.createCriteria(Perro.class).list();
+			s.beginTransaction().commit();
+			s.close();		
+	
+			return Response.ok().entity(perros).build();
+		} catch (Exception e){
+			return Response.serverError().build();
 		}
-		
-
-		return Response.status(200).entity(perros).build();
-
 	}
 
 	@GET
@@ -63,23 +57,19 @@ public class PerroController {
 	public Response getById(@PathParam("id") int idPerro) {
 
 		try {
+			Perro pPerro = null;
 			Session s = HibernateUtil.getSession();
 			s.beginTransaction();
-			// simular error interno del servidor error 500
-			if (idPerro <= 0) {
-				throw new Exception("Error Interno 500");
-			}
-
-			Perro pPerro = (Perro) s.get(Perro.class, idPerro);
-
-			System.out.println("nombre: " + pPerro.getNombre() + "raza: "
-					+ pPerro.getRaza());
+			pPerro = (Perro) s.get(Perro.class, idPerro);			
 			s.beginTransaction().commit();
 			s.close();
-			return Response.status(200).entity(pPerro).build();
+			if(pPerro == null){
+				return Response.status(404).entity(new FechaHora()).build();
+			}
+			return Response.ok().entity(pPerro).build();
 
 		} catch (Exception e) {
-			return Response.status(500).build();
+			return Response.serverError().build();
 
 		}
 	}
@@ -100,11 +90,10 @@ public class PerroController {
 			s.delete(pElimnar);
 			s.beginTransaction().commit();
 			s.close();
-			return Response.status(200)
-					.entity("eliminado: " + idPerro + " " + this.date).build();
+			return Response.status(200).entity(new FechaHora()).build();
 
 		} catch (Exception e) {
-			return Response.status(500).build();
+			return Response.serverError().build();
 
 		}
 	}
@@ -113,23 +102,19 @@ public class PerroController {
 	@Path("/{nombre}/{raza}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response post(@PathParam("nombre") String nombrePerro,
-			@PathParam("raza") String razaPerro) {
-
+						 @PathParam("raza") String razaPerro) {
 		try {
 			Session s = HibernateUtil.getSession();
 			s.beginTransaction();
-			Perro p7 = new Perro(nombrePerro, razaPerro);
-			s.save(p7);
+			Perro pCreado = new Perro(nombrePerro, razaPerro);
+			s.save(pCreado);
 			s.beginTransaction().commit();
 			s.close();
 
-			return Response
-					.status(200)
-					.entity("creado:" + "nombre:" + nombrePerro + "raza: "
-							+ razaPerro + this.date).build();
+			return Response.status(201).entity(pCreado).build();
 
 		} catch (Exception e) {
-			return Response.status(500).build();
+			return Response.serverError().build();
 
 		}
 	}

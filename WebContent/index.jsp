@@ -29,100 +29,76 @@
 			</ul>
 		</div>
 		<div data-role="main">
+			<div id="mensaje" data-theme="b"></div>		
 			<ul id="perros_home" data-role="listview" data-inset="true" data-filter="true">
 				<li>Sin cargar perros</li>
 			</ul>
 		</div>
 		<div data-role="footer">Pie de pagina</div>
 	</div>
-<!-- /page HOME -->
+
 
 <!-- page MODIFICAR -->
-	<div data-role="page" id="modificar">
-	
+	<div data-role="page" id="modificar">	
 		<div data-role="header">
 			<a href="#home" class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-home">Home</a>
 			<h2>Modificar-Detalle</h2>
 		</div>
-
-		<div data-role="main">
-		
-			<input type="hidden" name="id_modificar" id="id_modificar">
-		
+		<div data-role="main">		
+			<input type="hidden" name="id_modificar" id="id_modificar">		
 			<label for="nombre_modificar">Nombre:</label> 
-			<input type="text" name="nombre_modificar" id="nombre_modificar" value=""> 
-			
+			<input type="text" name="nombre_modificar" id="nombre_modificar" value=""> 			
 			<label for="raza_modificar">Raza:</label> 
-			<input type="text" name="raza_modificar" id="raza_modificar" value=""> 
-			
-			<a href="#" id="botonModificar" data-role="button" data-theme="e" class="ui-btn ui-shadow ui-corner-all ui-btn-icon-bottom ui-icon-edit">
+			<input type="text" name="raza_modificar" id="raza_modificar" value=""> 			
+			<a href="#" id="botonModificar" data-role="button" data-theme="e" 
+			   class="ui-btn ui-shadow ui-corner-all ui-btn-icon-bottom ui-icon-edit"
+			   onclick="modificarPerro();">
 				Modificar 
 			</a>
 		</div>
-
-
-
-	</div>
-	<!-- /page modificar -->
-
+	</div>	
+	
+	
+<!-- page CREAR -->
 	<div data-role="page" id="crear">
-
 		<div data-role="header">
-			<a href="#home"
-				class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-home">Home</a>
+			<a href="#home" class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-home">Home</a>
 			<h2>Crear Perro</h2>
 		</div>
-		<!-- /header -->
-
 		<div data-role="main">
-
-
-			<label for="nombre">Nombre:</label> <input type="text" name="nombre"
-				id="nombre"> <label for="raza">Raza:</label> <input
-				type="text" name="raza" id="raza"> <a href="#"
-				id="botonCrear" data-role="button" data-theme="e"
-				class="ui-btn ui-shadow ui-corner-all ui-btn-icon-bottom ui-icon-plus">
-				> Crear </a>
+			<label for="nombre_crear">Nombre:</label> 
+			<input type="text" name="nombre_crear" id="nombre_crear" value=""> 			
+			<label for="raza_crear">Raza:</label> 
+			<input type="text" name="raza_crear" id="raza_crear" value=""> 
+			<a href="#" id="botonCrear" data-role="button" data-theme="e"
+			   class="ui-btn ui-shadow ui-corner-all ui-btn-icon-bottom ui-icon-plus"
+			   onclick="crearPerro();">
+				Crear 
+			</a>
 		</div>
-
-
-
 	</div>
-	<!-- /page crear -->
-
+	
+	
+<!-- page ELIMINAR -->
 	<div data-role="page" id="eliminar">
-
 		<div data-role="header">
-			<a href="#home"
-				class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-home">Home</a>
+			<a href="#home" class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-home">Home</a>
 			<h2>Eliminar Perro</h2>
 		</div>
-		<!-- /header -->
-
 		<div data-role="main">
-
 			<div class="ui-field-contain">
-				<label for="select-perro">Perro a eliminar:</label> <select
-					name="select-perro" id="select-perro">
-					<option value="1">Buba</option>
-					<option value="2">Canela</option>
-					<option value="3">Ribgo</option>
-					<option value="4">Sarpu</option>
-					<option value="5">LLIdo</option>
-					<option value="6">Puklgas</option>
-					<option value="6">Rabioso</option>
+				<label for="select-perro">Perro a eliminar:</label> 
+				<select name="select-perro" id="select-perro">
+					<option value="0">Sin cargar perros</option>
 				</select>
-
 			</div>
-
-
-			<a href="#" id="botonEliminar" data-role="button" data-theme="e"
-				class="ui-btn ui-shadow ui-corner-all ui-btn-icon-bottom ui-icon-delete">
-				Eliminar </a>
+			<a href="#" id="botonEliminar" data-role="button" data-theme="e" 
+			   class="ui-btn ui-shadow ui-corner-all ui-btn-icon-bottom ui-icon-delete"
+			   onclick="eliminarPerro();">
+				Eliminar
+			</a>
 		</div>
-
 	</div>
-	<!-- /page crear -->
 
 
 	<script>
@@ -131,9 +107,8 @@
 		var perros = [];
 		var perro_selec;
 
-		$(document).on("pageinit", "#home", function() {
-			console.debug('"pageinit": Home cargada');
-
+		$(document).on("pagebeforeshow", "#home", function() {
+			perros = [];
 			$.get(servicio + "perro", function(data) {
 				var output = '';
 				$.each(data, function(index, value) {
@@ -142,7 +117,6 @@
 				});
 				$('#perros_home').html(output).listview("refresh");
 			});
-
 		});
 		
 		/* Detectar click en listado perros HOME */
@@ -157,6 +131,84 @@
 			$("#nombre_modificar").val(perro_selec.nombre);
 			$("#raza_modificar").val(perro_selec.raza);
 		});
+		
+		function modificarPerro(){
+			var id = $('#id_modificar').val();
+			var nombre = $('#nombre_modificar').val();
+			var raza = $('#raza_modificar').val();
+			
+			$.ajax({
+			    type: "PUT",
+			    url: servicio + 'perro/' + id + '/' + nombre + '/' + raza,
+			    success: function(data) {
+			    	//called when successful
+			    	alert('ok');
+			    	//$('#mensaje').html('Perro '+ id + ' modificado.');
+			    	$.mobile.navigate("#home");
+			      },
+			      error: function(e) {
+			    	//called when there is an error
+			    	alert('fail');
+			    	$.mobile.navigate("#home");
+			      }
+			});
+		};
+		
+		function crearPerro(){
+			var nombre = $('#nombre_crear').val();
+			var raza = $('#raza_crear').val();			
+			$.ajax({
+			    type: "POST",
+			    url: servicio + 'perro/' + nombre + '/' + raza,
+			    success: function(data) {
+			    	//called when successful
+			    	alert('ok');
+			    	$.mobile.navigate("#home");
+			      },
+			      error: function(e) {
+			    	//called when there is an error
+			    	alert('fail');
+			    	$.mobile.navigate("#home");
+			      }
+			});
+		};
+		
+		$(document).on("pagebeforeshow", "#eliminar", function() {
+			$.ajax({
+			    type: "GET",
+			    url: servicio + 'perro',
+			    success: function(data) {
+			    	var output = '';
+			    	$.each(data, function(index, value){
+			    		output += '<option value="' + value.id + '">' + value.nombre + '</option>';
+			    	});
+			    	$('#select-perro').html(output).selectmenu('refresh', true);			    				    	
+			      },
+			      error: function(e) {			    	
+			    	alert('fail');			    	
+			      }
+			});
+		});
+		
+		function eliminarPerro(){
+			var id = $('#select-perro option:selected').val();						
+			$.ajax({
+			    type: "DELETE",
+			    url: servicio + 'perro/' + id,
+			    success: function(data) {
+			    	//called when successful
+			    	alert('ok');
+			    	$.mobile.navigate("#home");
+			      },
+			      error: function(e) {
+			    	//called when there is an error
+			    	alert('fail');
+			    	$.mobile.navigate("#home");
+			      }
+			});
+		};
+		
+		
 			
 	</script>
 
