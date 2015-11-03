@@ -22,6 +22,7 @@ import org.hibernate.Session;
 import com.ipartek.formacion.ejemplos.restHibernate.model.HibernateUtil;
 import com.ipartek.formacion.ejemplos.restHibernate.pojo.FechaHora;
 import com.ipartek.formacion.ejemplos.restHibernate.pojo.Perro;
+import com.sun.jersey.api.client.ClientResponse.Status;
 
 /**
  * El poryecto hace refencia al proyecto skalada
@@ -37,8 +38,8 @@ public class PerroController {
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	@ApiOperation(value = "Busca todos los perros",
-	    notes = "decripcion balabalaala",
+	@ApiOperation(value = "Listado de perros",
+	    notes = "Listado de perros existentes en la perrera, limitado a 1.000 perros",
 	    response = Perro.class,
 	    responseContainer = "List")	
 	@ApiResponses(value = {
@@ -64,12 +65,12 @@ public class PerroController {
 	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	@ApiOperation(value = "Busca un perro",
-	    notes = "devuelve un perro mediante el paso de su ID",
+	    notes = "Devuelve un perro mediante el paso de su ID",
 	    response = Perro.class,
 	    responseContainer = "Perro")	
 	@ApiResponses(value = {
 			@ApiResponse(code = 200, message = "Todo OK"),
-			@ApiResponse(code = 404, message = "ID invalido"),
+			@ApiResponse(code = 204, message = "No existe Perro con ese ID"),
 			@ApiResponse(code = 500, message = "Error inexperado en el servidor")
 	})
 	public Response getById(@PathParam("id") int idPerro) {
@@ -82,7 +83,7 @@ public class PerroController {
 			s.beginTransaction().commit();
 			s.close();
 			if(perro == null){
-				return Response.status(404).build();
+				return Response.noContent().build();
 			}
 			return Response.ok().entity(perro).build();
 		} catch (Exception e) {
@@ -100,7 +101,7 @@ public class PerroController {
 	    responseContainer = "FechaHora")	
 	@ApiResponses(value = {
 			@ApiResponse(code = 200, message = "Perro eliminado"),
-			@ApiResponse(code = 404, message = "ID invalido"),
+			@ApiResponse(code = 204, message = "No existe Perro con ese ID"),
 			@ApiResponse(code = 500, message = "Error inexperado en el servidor")
 	})
 	public Response delete(@PathParam("id") int idPerro) {
@@ -113,14 +114,14 @@ public class PerroController {
 			s.beginTransaction().commit();
 			s.close();
 			if(pElimnar == null){
-				return Response.status(404).build();
+				return Response.noContent().build();
 			} else {
 				s = HibernateUtil.getSession();
 				s.beginTransaction();	
 				s.delete(pElimnar);
 				s.beginTransaction().commit();
 				s.close();
-				return Response.status(200).entity(new FechaHora()).build();
+				return Response.ok().entity(new FechaHora()).build();
 			}
 		} catch (Exception e) {
 			return Response.serverError().build();
@@ -135,17 +136,13 @@ public class PerroController {
 	    response = Perro.class,
 	    responseContainer = "Perro")	
 	@ApiResponses(value = {
-			@ApiResponse(code = 201, message = "Todo OK"),
-			@ApiResponse(code = 204, message = "Campos vacios"),
+			@ApiResponse(code = 201, message = "Perro guardado con exito"),
 			@ApiResponse(code = 409, message = "Perro existente"),
 			@ApiResponse(code = 500, message = "Error inexperado en el servidor")
 	})
 	public Response post(@PathParam("nombre") String nombrePerro,
 						 @PathParam("raza") String razaPerro) {
-		try {
-			if(nombrePerro.equalsIgnoreCase("") && razaPerro.equalsIgnoreCase("")){
-				return Response.status(204).build();
-			}			
+		try {					
 			Perro pCreado = new Perro(nombrePerro, razaPerro);
 			int idpCreado = 0;
 			s = HibernateUtil.getSession();
@@ -154,9 +151,9 @@ public class PerroController {
 			s.beginTransaction().commit();
 			s.close();
 			if (idpCreado != 0){
-				return Response.status(201).entity(pCreado).build();
+				return Response.status(Status.CREATED).entity(pCreado).build();
 			} else {
-				return Response.status(409).build();
+				return Response.status(Status.CONFLICT).build();
 			}
 		} catch (Exception e) {
 			return Response.serverError().build();
@@ -167,31 +164,27 @@ public class PerroController {
 	@Path("/{id}/{nombre}/{raza}")
 	@Produces(MediaType.APPLICATION_JSON)
 	@ApiOperation(value = "Modifica un perro",
-		notes = "Modifica un perro ya existente",
+		notes = "Modifica un perro ya existente mediante su ID",
 	    response = Perro.class,
 	    responseContainer = "Perro")	
 	@ApiResponses(value = {
 			@ApiResponse(code = 200, message = "Todo OK"),
-			@ApiResponse(code = 204, message = "Campos vacios"),
-			@ApiResponse(code = 404, message = "ID invalido"),
-			@ApiResponse(code = 409, message = "Perro existente"),
+			@ApiResponse(code = 204, message = "ID invalido"),
+			@ApiResponse(code = 409, message = "Perro existente, no se puede modificar"),
 			@ApiResponse(code = 500, message = "Error inexperado en el servidor")
 	})
 	public Response put(@PathParam("id") int idPerro,
 			@PathParam("nombre") String nombrePerro,
 			@PathParam("raza") String razaPerro) {
 		try {
-			Perro pModificar = null;
-			if(nombrePerro.equalsIgnoreCase("") && razaPerro.equalsIgnoreCase("")){
-				return Response.status(204).build();
-			}			
+			Perro pModificar = null;				
 			s = HibernateUtil.getSession();
 			s.beginTransaction();			
 			pModificar = (Perro) s.get(Perro.class, idPerro);
 			s.beginTransaction().commit();
 			s.close();
 			if(pModificar == null ){
-				return Response.status(404).build();
+				return Response.noContent().build();
 			} else {
 				pModificar.setNombre(nombrePerro);
 				pModificar.setRaza(razaPerro);
@@ -200,10 +193,10 @@ public class PerroController {
 				s.update(pModificar);
 				s.beginTransaction().commit();
 				s.close();
-				return Response.status(200).entity(pModificar).build();
+				return Response.ok().entity(pModificar).build();
 			}
 		} catch (Exception e) {
-			return Response.status(500).build();
+			return Response.serverError().build();
 
 		}
 	}

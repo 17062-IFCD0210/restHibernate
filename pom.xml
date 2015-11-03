@@ -51,7 +51,7 @@
 			<scope>compile</scope>
 		</dependency>
 		<!-- Swagger -->
-		<!-- Tutoriol para inicializar: -->
+		<!-- Tutorial para inicializar: -->
 		<!-- https://github.com/swagger-api/swagger-core/wiki/Swagger-Core-Jersey-1.X-Project-Setup-1.5 -->
 		<!-- Swagger-UI: (Carpeta /dist) -->
 		<!-- https://github.com/swagger-api/swagger-ui -->

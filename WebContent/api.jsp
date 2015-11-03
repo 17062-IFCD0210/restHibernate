@@ -23,9 +23,9 @@
   <script src='lib/swagger-oauth.js' type='text/javascript'></script>
 
   <!-- Some basic translations -->
-  <!-- <script src='lang/translator.js' type='text/javascript'></script> -->
-  <!-- <script src='lang/ru.js' type='text/javascript'></script> -->
+  <script src='lang/translator.js' type='text/javascript'></script>
   <!-- <script src='lang/en.js' type='text/javascript'></script> -->
+  <script src='lang/es.js' type='text/javascript'></script>
 
   <script type="text/javascript">
     $(function () {
