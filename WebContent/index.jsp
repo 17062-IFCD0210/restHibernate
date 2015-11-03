@@ -34,7 +34,13 @@
 				<li>Sin cargar perros</li>
 			</ul>
 		</div>
-		<div data-role="footer">Pie de pagina</div>
+		<div data-role="footer">
+			
+			<a target="_blank" href="http://localhost:8080/restHibernate/api.jsp">
+				<img src="http://localhost:8080/restHibernate/images/logo_small.png">
+				Documentacion Api
+			</a>
+		</div>
 	</div>
 
 
