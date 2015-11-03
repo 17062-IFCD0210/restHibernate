@@ -35,7 +35,7 @@
 		<div id="pie"></div>	
 		<div data-role="footer">
 			<a href="http://localhost:8080/restHibernate/api.jsp" target="_blank">
-				<img src="http://localhost:8080/restHibernate/images/logo_small.png"/>Documentación API
+				<img src="http://localhost:8080/restHibernate/js/swagger-ui/images/logo_small.png"/>Documentación API
 			</a>				
 		</div>
 	</div>
