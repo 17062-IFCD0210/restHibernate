@@ -34,7 +34,9 @@
 				<li>Sin cargar perros</li>
 			</ul>
 		</div>
-		<div data-role="footer">Pie de pagina</div>
+		<div data-role="footer">
+			<a href="api.jsp" target="_blank"><img src="images/favicon-32x32.png"></a>
+		</div>
 	</div>
 
 
@@ -56,6 +58,9 @@
 				Modificar 
 			</a>
 		</div>
+		<div data-role="footer">
+			<a href="api.jsp" target="_blank"><img src="images/favicon-32x32.png"></a>
+		</div>
 	</div>	
 	
 	
@@ -75,6 +80,9 @@
 			   onclick="crearPerro();">
 				Crear 
 			</a>
+		</div>
+		<div data-role="footer">
+			<a href="api.jsp" target="_blank"><img src="images/favicon-32x32.png"></a>
 		</div>
 	</div>
 	
@@ -97,6 +105,9 @@
 			   onclick="eliminarPerro();">
 				Eliminar
 			</a>
+		</div>
+		<div data-role="footer">
+			<a href="api.jsp" target="_blank"><img src="images/favicon-32x32.png"></a>
 		</div>
 	</div>
 

@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>Swagger UI</title>
+  <title>Perrera</title>
   <link rel="icon" type="image/png" href="images/favicon-32x32.png" sizes="32x32" />
   <link rel="icon" type="image/png" href="images/favicon-16x16.png" sizes="16x16" />
   <link href='css/typography.css' media='screen' rel='stylesheet' type='text/css'/>
@@ -23,7 +23,8 @@
   <script src='lib/swagger-oauth.js' type='text/javascript'></script>
 
   <!-- Some basic translations -->
-  <!-- <script src='lang/translator.js' type='text/javascript'></script> -->
+  <script src='lang/translator.js' type='text/javascript'></script>
+  <script src='lang/es.js' type='text/javascript'></script>
   <!-- <script src='lang/ru.js' type='text/javascript'></script> -->
   <!-- <script src='lang/en.js' type='text/javascript'></script> -->
 
@@ -102,16 +103,11 @@
 </head>
 
 <body class="swagger-section">
-<div id='header'>
-  <div class="swagger-ui-wrap">
-    <a id="logo" href="http://swagger.io">swagger</a>
-    <form id='api_selector'>
-      <div class='input'><input placeholder="http://example.com/api" id="input_baseUrl" name="baseUrl" type="text"/></div>
-      <div class='input'><input placeholder="api_key" id="input_apiKey" name="apiKey" type="text"/></div>
-      <div class='input'><a id="explore" href="#" data-sw-translate>Explore</a></div>
-    </form>
-  </div>
-</div>
+<!-- <div id='header'> -->
+<!--   <div class="swagger-ui-wrap"> -->
+<!--     <a id="logo" href="http://localhost:8080/restHibernate/api.jsp">Perrera</a> -->
+<!--   </div> -->
+<!-- </div> -->
 
 <div id="message-bar" class="swagger-ui-wrap" data-sw-translate>&nbsp;</div>
 <div id="swagger-ui-container" class="swagger-ui-wrap"></div>
