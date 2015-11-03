@@ -63,6 +63,15 @@ public class PerroController {
 	@GET
 	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
+	@ApiOperation(value = "Busca un perro",
+	    notes = "devuelve un perro mediante el paso de su ID",
+	    response = Perro.class,
+	    responseContainer = "Perro")	
+	@ApiResponses(value = {
+			@ApiResponse(code = 200, message = "Todo OK"),
+			@ApiResponse(code = 404, message = "ID invalido"),
+			@ApiResponse(code = 500, message = "Error inexperado en el servidor")
+	})
 	public Response getById(@PathParam("id") int idPerro) {
 
 		try {
@@ -85,6 +94,15 @@ public class PerroController {
 	@DELETE
 	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
+	@ApiOperation(value = "Elimina un perro",
+	    notes = "Elimina un perro mediante el paso de su ID",
+	    response = Perro.class,
+	    responseContainer = "FechaHora")	
+	@ApiResponses(value = {
+			@ApiResponse(code = 200, message = "Perro eliminado"),
+			@ApiResponse(code = 404, message = "ID invalido"),
+			@ApiResponse(code = 500, message = "Error inexperado en el servidor")
+	})
 	public Response delete(@PathParam("id") int idPerro) {
 
 		try {
@@ -112,6 +130,16 @@ public class PerroController {
 	@POST
 	@Path("/{nombre}/{raza}")
 	@Produces(MediaType.APPLICATION_JSON)
+	@ApiOperation(value = "Añade un perro",
+	    notes = "Crea y persiste un nuevo perro",
+	    response = Perro.class,
+	    responseContainer = "Perro")	
+	@ApiResponses(value = {
+			@ApiResponse(code = 201, message = "Todo OK"),
+			@ApiResponse(code = 204, message = "Campos vacios"),
+			@ApiResponse(code = 409, message = "Perro existente"),
+			@ApiResponse(code = 500, message = "Error inexperado en el servidor")
+	})
 	public Response post(@PathParam("nombre") String nombrePerro,
 						 @PathParam("raza") String razaPerro) {
 		try {
@@ -128,22 +156,30 @@ public class PerroController {
 			if (idpCreado != 0){
 				return Response.status(201).entity(pCreado).build();
 			} else {
-				return Response.status(404).build();
+				return Response.status(409).build();
 			}
-
 		} catch (Exception e) {
 			return Response.serverError().build();
-
 		}
 	}
 
 	@PUT
 	@Path("/{id}/{nombre}/{raza}")
 	@Produces(MediaType.APPLICATION_JSON)
+	@ApiOperation(value = "Modifica un perro",
+		notes = "Modifica un perro ya existente",
+	    response = Perro.class,
+	    responseContainer = "Perro")	
+	@ApiResponses(value = {
+			@ApiResponse(code = 200, message = "Todo OK"),
+			@ApiResponse(code = 204, message = "Campos vacios"),
+			@ApiResponse(code = 404, message = "ID invalido"),
+			@ApiResponse(code = 409, message = "Perro existente"),
+			@ApiResponse(code = 500, message = "Error inexperado en el servidor")
+	})
 	public Response put(@PathParam("id") int idPerro,
 			@PathParam("nombre") String nombrePerro,
 			@PathParam("raza") String razaPerro) {
-
 		try {
 			Perro pModificar = null;
 			if(nombrePerro.equalsIgnoreCase("") && razaPerro.equalsIgnoreCase("")){
@@ -166,7 +202,6 @@ public class PerroController {
 				s.close();
 				return Response.status(200).entity(pModificar).build();
 			}
-
 		} catch (Exception e) {
 			return Response.status(500).build();
 
