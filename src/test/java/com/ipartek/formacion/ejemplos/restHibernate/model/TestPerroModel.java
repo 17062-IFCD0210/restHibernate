@@ -1,4 +1,4 @@
-package com.ipartek.formacion.ejemplos.restHibernate.pojo;
+package com.ipartek.formacion.ejemplos.restHibernate.model;
 
 import java.util.ArrayList;
 
@@ -10,8 +10,9 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.ipartek.formacion.ejemplos.restHibernate.model.HibernateUtil;
+import com.ipartek.formacion.ejemplos.restHibernate.pojo.Perro;
 
-public class TestPerro {
+public class TestPerroModel {
 	Perro p = new Perro();
 	Session s;
 
