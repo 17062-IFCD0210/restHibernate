@@ -6,8 +6,10 @@
 <title>Perrera Mobile</title>
 
 <link rel="stylesheet" href="js/jqm/jquery.mobile-1.4.5.min.css">
+<link rel="stylesheet" href="js/jqm/jquery.mobile.simpledialog.css">
 <script src="js/jqm/jquery.js"></script>
 <script src="js/jqm/jquery.mobile-1.4.5.min.js"></script>
+<script src="js/jqm/jquery.mobile.simpledialog2.js"></script>
 
 </head>
 <body>
@@ -20,21 +22,21 @@
 		</div>
 		<div data-role="navbar">
 			<ul>
+				<li></li>
 				<li>
 					<a href="#crear" class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-plus">Crear nuevo perro</a>
 				</li>
-				<li>
-					<a href="#eliminar" class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-delete">Eliminar perro</a>
-				</li>
+				
 			</ul>
 		</div>
-		<div data-role="main">
-			<div id="mensaje" data-theme="b"></div>		
+		<div data-role="main">				
 			<ul id="perros_home" data-role="listview" data-inset="true" data-filter="true">
 				<li>Sin cargar perros</li>
 			</ul>
+			<div id="dialog"></div>	
 		</div>
-		<div data-role="footer"><a target="_blank" href="http://localhost:8080/restHibernate/api.jsp"><img alt="" src="http://localhost:8080/restHibernate/images/logo_small.png">Documentacion Rest</a></div>
+		
+		<div style="text-align:center;" data-role="footer"><a target="_blank" href="http://localhost:8080/restHibernate/api.jsp"><img alt="" src="http://localhost:8080/restHibernate/js/swagger-ui/images/logo_small.png">Documentacion Rest</a></div>
 	</div>
 
 
@@ -49,12 +51,25 @@
 			<label for="nombre_modificar">Nombre:</label> 
 			<input type="text" name="nombre_modificar" id="nombre_modificar" value=""> 			
 			<label for="raza_modificar">Raza:</label> 
-			<input type="text" name="raza_modificar" id="raza_modificar" value=""> 			
-			<a href="#" id="botonModificar" data-role="button" data-theme="e" 
-			   class="ui-btn ui-shadow ui-corner-all ui-btn-icon-bottom ui-icon-edit"
-			   onclick="modificarPerro();">
-				Modificar 
-			</a>
+			<input type="text" name="raza_modificar" id="raza_modificar" value=""> 
+			<div data-role="navbar">
+				<ul>
+					<li>
+						<a href="#" id="botonModificar" data-role="button" data-theme="e" 
+						   class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-edit"
+						   onclick="modificarPerro();">
+							Modificar 
+						</a>
+					</li>
+					<li>
+						<a href="#" id="botonEliminar" data-role="button" data-theme="e"
+						   class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-delete"
+						   onclick="eliminarPerro();">
+						   Eliminar
+						</a>
+					</li>
+				</ul>
+			</div>
 		</div>
 	</div>	
 	
@@ -142,13 +157,28 @@
 			    url: servicio + 'perro/' + id + '/' + nombre + '/' + raza,
 			    success: function(data) {
 			    	//called when successful
-			    	alert('ok');
-			    	//$('#mensaje').html('Perro '+ id + ' modificado.');
+			    	$('#dialog').simpledialog2({
+					    mode: 'blank',
+					    headerText: 'Mensaje',
+					    headerClose: true,
+					    blankContent : 
+					      "<p>Perro modificado con exito!</p>"+
+					      // NOTE: the use of rel="close" causes this button to close the dialog.
+					      "<a rel='close' data-role='button' href='#'>Cerrar</a>"
+					});
 			    	$.mobile.navigate("#home");
-			      },
-			      error: function(e) {
+				},
+				error: function(e) {
 			    	//called when there is an error
-			    	alert('fail');
+			    	$('#dialog').simpledialog2({
+					    mode: 'blank',
+					    headerText: 'Mensaje',
+					    headerClose: true,
+					    blankContent : 
+					      "<p>Se ha producido un error al modificar el Perro seleccionado</p>"+
+					      // NOTE: the use of rel="close" causes this button to close the dialog.
+					      "<a rel='close' data-role='button' href='#'>Cerrar</a>"
+					});
 			    	$.mobile.navigate("#home");
 			      }
 			});
@@ -158,18 +188,32 @@
 			var nombre = $('#nombre_crear').val();
 			var raza = $('#raza_crear').val();			
 			$.ajax({
-			    type: "POST",
+				type: "POST",
 			    url: servicio + 'perro/' + nombre + '/' + raza,
-			    success: function(data) {
-			    	//called when successful
-			    	alert('ok');
+			    success: function(data) {			    	
+			    	$('#dialog').simpledialog2({
+						mode: 'blank',
+					    headerText: 'Mensaje',
+					    headerClose: true,
+					    blankContent : 
+					      "<p>Perro creado con exito!</p>"+
+					      // NOTE: the use of rel="close" causes this button to close the dialog.
+					      "<a rel='close' data-role='button' href='#'>Cerrar</a>"
+					});
 			    	$.mobile.navigate("#home");
-			      },
-			      error: function(e) {
-			    	//called when there is an error
-			    	alert('fail');
-			    	$.mobile.navigate("#home");
-			      }
+			    },
+			   	error: function(e) {
+			    	$('#dialog').simpledialog2({
+						mode: 'blank',
+						headerText: 'Mensaje',
+						headerClose: true,
+						blankContent : 
+						  "<p>Se ha producido un error al crear el Perro</p>"+
+						  // NOTE: the use of rel="close" causes this button to close the dialog.
+						  "<a rel='close' data-role='button' href='#'>Cerrar</a>"
+					});
+					$.mobile.navigate("#home");
+			  	}
 			});
 		};
 		
@@ -191,18 +235,33 @@
 		});
 		
 		function eliminarPerro(){
-			var id = $('#select-perro option:selected').val();						
+// 			var id = $('#select-perro option:selected').val();
+			var id = $('#id_modificar').val();
 			$.ajax({
 			    type: "DELETE",
 			    url: servicio + 'perro/' + id,
 			    success: function(data) {
-			    	//called when successful
-			    	alert('ok');
+			    	$('#dialog').simpledialog2({
+					    mode: 'blank',
+					    headerText: 'Mensaje',
+					    headerClose: true,
+					    blankContent : 
+					      "<p>Perro eliminado con exito!</p>"+
+					      // NOTE: the use of rel="close" causes this button to close the dialog.
+					      "<a rel='close' data-role='button' href='#'>Cerrar</a>"
+					 });
 			    	$.mobile.navigate("#home");
 			      },
 			      error: function(e) {
-			    	//called when there is an error
-			    	alert('fail');
+			    	  $('#dialog').simpledialog2({
+						    mode: 'blank',
+						    headerText: 'Mensaje',
+						    headerClose: true,
+						    blankContent : 
+						      "<p>Se ha producido un error al eliminar el Perro seleccionado</p>"+
+						      // NOTE: the use of rel="close" causes this button to close the dialog.
+						      "<a rel='close' data-role='button' href='#'>Cerrar</a>"
+						 });
 			    	$.mobile.navigate("#home");
 			      }
 			});
