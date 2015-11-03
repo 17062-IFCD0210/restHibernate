@@ -36,20 +36,20 @@ public class Perro {
 
 	public Perro() {
 		super();
-		this.nombre = "";
-		this.rabo = "";
+		nombre = "";
+		rabo = "";
 	}
 
 	public String getNombre() {
-		return this.nombre;
+		return nombre;
 	}
 
 	public int getId() {
-		return this.Id;
+		return Id;
 	}
 
 	public void setId(int id) {
-		this.Id = id;
+		Id = id;
 	}
 
 	public void setNombre(String nombre) {
@@ -57,7 +57,7 @@ public class Perro {
 	}
 
 	public String getRabo() {
-		return this.rabo;
+		return rabo;
 	}
 
 	public void setRabo(String rabo) {
@@ -66,7 +66,7 @@ public class Perro {
 
 	@Override
 	public String toString() {
-		return "Perro [nombre=" + this.nombre + ", rabo=" + this.rabo + "]";
+		return "Perro [nombre=" + nombre + ", rabo=" + rabo + "]";
 	}
 
 }

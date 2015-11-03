@@ -42,8 +42,7 @@ public class PerroController {
 		Session s = HibernateUtil.getSession();
 		perros = (ArrayList<Perro>) s.createCriteria(Perro.class).list();
 
-		System.out.println("GETALL:" + "Numero de perros en la perrera: "
-				+ perros.size());
+		System.out.println("GETALL:" + "Numero de perros en la perrera: " + perros.size());
 		for (int i = 0; i < perros.size(); i++) {
 			System.out.println("Perro: " + i);
 			perros.get(i).toString();
@@ -69,8 +68,7 @@ public class PerroController {
 
 			Perro pPerro = (Perro) s.get(Perro.class, idPerro);
 
-			System.out.println("nombre: " + pPerro.getNombre() + "rabo: "
-					+ pPerro.getRabo());
+			System.out.println("nombre: " + pPerro.getNombre() + "rabo: " + pPerro.getRabo());
 			s.beginTransaction().commit();
 			s.close();
 			return Response.status(200).entity(pPerro).build();
@@ -97,8 +95,7 @@ public class PerroController {
 			s.delete(pElimnar);
 			s.beginTransaction().commit();
 			s.close();
-			return Response.status(200)
-					.entity("eliminado: " + idPerro + " " + this.date).build();
+			return Response.status(200).entity("eliminado: " + idPerro + " " + date).build();
 
 		} catch (Exception e) {
 			return Response.status(500).build();
@@ -109,8 +106,7 @@ public class PerroController {
 	@POST
 	@Path("/{nombre}/{rabo}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response post(@PathParam("nombre") String nombrePerro,
-			@PathParam("rabo") String raboPerro) {
+	public Response post(@PathParam("nombre") String nombrePerro, @PathParam("rabo") String raboPerro) {
 
 		try {
 			Session s = HibernateUtil.getSession();
@@ -120,10 +116,7 @@ public class PerroController {
 			s.beginTransaction().commit();
 			s.close();
 
-			return Response
-					.status(200)
-					.entity("creado:" + "nombre:" + nombrePerro + "rabo: "
-							+ raboPerro + this.date).build();
+			return Response.status(200).entity("creado:" + "nombre:" + nombrePerro + "rabo: " + raboPerro + date).build();
 
 		} catch (Exception e) {
 			return Response.status(500).build();
@@ -134,9 +127,7 @@ public class PerroController {
 	@PUT
 	@Path("/{id}/{nombre}/{rabo}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response put(@PathParam("id") int idPerro,
-			@PathParam("nombre") String nombrePerro,
-			@PathParam("rabo") String raboPerro) {
+	public Response put(@PathParam("id") int idPerro, @PathParam("nombre") String nombrePerro, @PathParam("rabo") String raboPerro) {
 
 		try {
 			Session s = HibernateUtil.getSession();

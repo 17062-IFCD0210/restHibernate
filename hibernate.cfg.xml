@@ -20,7 +20,7 @@
 		<!-- Echo all executed SQL to stdout -->
 		<property name="show_sql">true</property>
 		<!-- Drop and re-create the database schema on startup -->
-		<property name="hbm2ddl.auto">create</property>
+		<property name="hbm2ddl.auto">create</property><!-- Cuidado con esta linea cada vez crea porque lo crea desde 0, por que estamos en local -->
 		<mapping class="com.ipartek.formacion.ejemplos.restHibernate.pojo.Perro" />
 	</session-factory>
 </hibernate-configuration>

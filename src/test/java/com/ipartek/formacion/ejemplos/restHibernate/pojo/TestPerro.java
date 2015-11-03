@@ -45,14 +45,14 @@ public class TestPerro {
 
 	@Before
 	public void setUp() throws Exception {
-		this.s = HibernateUtil.getSession();
-		this.s.beginTransaction();
+		s = HibernateUtil.getSession();
+		s.beginTransaction();
 	}
 
 	@After
 	public void tearDown() throws Exception {
-		this.s.beginTransaction().commit();
-		this.s.close();
+		s.beginTransaction().commit();
+		s.close();
 	}
 
 	/**
@@ -62,7 +62,7 @@ public class TestPerro {
 	public void testCrearPerros() {
 
 		Perro p7 = new Perro("Lagun7", "siete");
-		this.s.save(p7);
+		s.save(p7);
 
 	}
 
@@ -71,9 +71,8 @@ public class TestPerro {
 
 		ArrayList<Perro> perros = new ArrayList<Perro>();
 		Session s = HibernateUtil.getSession();
-		perros = (ArrayList<Perro>) s.createQuery("from Perro").list();
-		System.out.println("GETALL:" + "Numero de perros en la perrera: "
-				+ perros.size());
+		perros = (ArrayList<Perro>) s.createQuery("from Perro").list(); // select * from perro
+		System.out.println("GETALL:" + "Numero de perros en la perrera: " + perros.size());
 		for (int i = 0; i < perros.size(); i++) {
 			System.out.println("Perro: " + i);
 			perros.get(i).toString();
@@ -84,28 +83,27 @@ public class TestPerro {
 	@Test
 	public void testEliminarPerro() {
 
-		Perro pElimnar = (Perro) this.s.get(Perro.class, 2);
-		this.s.delete(pElimnar);
+		Perro pElimnar = (Perro) s.get(Perro.class, 2);
+		s.delete(pElimnar);
 
 	}
 
 	@Test
 	public void testModificarPerro() {
 
-		Perro pModificar = (Perro) this.s.get(Perro.class, 4);
+		Perro pModificar = (Perro) s.get(Perro.class, 4);
 		pModificar.setNombre("Lagun Modificado");
 		pModificar.setRabo("Rabo Modificado");
-		this.s.update(pModificar);
+		s.update(pModificar);
 
 	}
 
 	@Test
 	public void testObtenerPerro() {
 
-		Perro pPerro = (Perro) this.s.get(Perro.class, 4);
+		Perro pPerro = (Perro) s.get(Perro.class, 4);
 
-		System.out.println("nombre: " + pPerro.getNombre() + "rabo: "
-				+ pPerro.getRabo());
+		System.out.println("nombre: " + pPerro.getNombre() + "rabo: " + pPerro.getRabo());
 
 	}
 }
