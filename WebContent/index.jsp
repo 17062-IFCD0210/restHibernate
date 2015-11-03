@@ -23,9 +23,6 @@
 				<li>
 					<a href="#crear" class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-plus">Crear nuevo perro</a>
 				</li>
-				<li>
-					<a href="#eliminar" class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-delete">Eliminar perro</a>
-				</li>
 			</ul>
 		</div>
 		<div data-role="main">
@@ -34,7 +31,13 @@
 				<li>Sin cargar perros</li>
 			</ul>
 		</div>
-		<div data-role="footer">Pie de pagina</div>
+		
+		<div id="pie"></div>	
+		<div data-role="footer">
+			<a href="http://localhost:8080/restHibernate/api.jsp" target="_blank">
+				<img src="http://localhost:8080/restHibernate/images/logo_small.png"/>Documentación API
+			</a>				
+		</div>
 	</div>
 
 
@@ -49,12 +52,31 @@
 			<label for="nombre_modificar">Nombre:</label> 
 			<input type="text" name="nombre_modificar" id="nombre_modificar" value=""> 			
 			<label for="raza_modificar">Raza:</label> 
-			<input type="text" name="raza_modificar" id="raza_modificar" value=""> 			
-			<a href="#" id="botonModificar" data-role="button" data-theme="e" 
-			   class="ui-btn ui-shadow ui-corner-all ui-btn-icon-bottom ui-icon-edit"
-			   onclick="modificarPerro();">
-				Modificar 
-			</a>
+			<input type="text" name="raza_modificar" id="raza_modificar" value=""> 	
+
+			<div data-role="navbar">
+				<ul>
+					<li>
+						<a href="#" id ="botonModificar" 
+						   data-role="button"
+						    data-theme="e"
+						    class="ui-btn ui-shadow ui-corner-all ui-btn-icon-bottom ui-icon-edit" 
+						    onclick="modificarPerro();">
+							Modificar
+						</a> 				
+					</li>
+					<li>
+						<a href="#" id ="botonEliminar" 
+						   data-role="button"
+						    data-theme="e" 
+						    class="ui-btn ui-shadow ui-corner-all ui-btn-icon-bottom ui-icon-delete"
+						     onclick="eliminarPerro();">
+							Eliminar
+						</a> 
+					</li>
+				</ul>
+		</div>			
+			
 		</div>
 	</div>	
 	
@@ -80,6 +102,7 @@
 	
 	
 <!-- page ELIMINAR -->
+<!-- 
 	<div data-role="page" id="eliminar">
 		<div data-role="header">
 			<a href="#home" class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-home">Home</a>
@@ -99,7 +122,7 @@
 			</a>
 		</div>
 	</div>
-
+ -->
 
 	<script>
 		/* Antes de carga la HOME, llamar al servicio y rellenar lista */
@@ -116,6 +139,7 @@
 					perros.push(value);
 				});
 				$('#perros_home').html(output).listview("refresh");
+				$('#pie').html(perros.length+' perros encontrados');
 			});
 		});
 		
@@ -142,7 +166,6 @@
 			    url: servicio + 'perro/' + id + '/' + nombre + '/' + raza,
 			    success: function(data) {
 			    	//called when successful
-			    	alert('ok');
 			    	//$('#mensaje').html('Perro '+ id + ' modificado.');
 			    	$.mobile.navigate("#home");
 			      },
@@ -162,7 +185,6 @@
 			    url: servicio + 'perro/' + nombre + '/' + raza,
 			    success: function(data) {
 			    	//called when successful
-			    	alert('ok');
 			    	$.mobile.navigate("#home");
 			      },
 			      error: function(e) {
@@ -173,6 +195,7 @@
 			});
 		};
 		
+/*		
 		$(document).on("pagebeforeshow", "#eliminar", function() {
 			$.ajax({
 			    type: "GET",
@@ -189,23 +212,21 @@
 			      }
 			});
 		});
-		
+*/		
 		function eliminarPerro(){
-			var id = $('#select-perro option:selected').val();						
-			$.ajax({
-			    type: "DELETE",
-			    url: servicio + 'perro/' + id,
-			    success: function(data) {
-			    	//called when successful
-			    	alert('ok');
-			    	$.mobile.navigate("#home");
-			      },
-			      error: function(e) {
-			    	//called when there is an error
-			    	alert('fail');
-			    	$.mobile.navigate("#home");
-			      }
-			});
+			if(confirm('¿Deseas eliminarlo?')){
+				var id = $('#select-perro option:selected').val();	
+				$.ajax({
+					type : 'DELETE',
+					url:servicio+"perro/"+$("#id_modificar").val(),
+					success:$.mobile.navigate("#home"),	
+				    error: function(e) {
+				    	//called when there is an error
+				    	alert('fail');
+				    	$.mobile.navigate("#home");
+				    }
+				});
+			}
 		};
 		
 		
