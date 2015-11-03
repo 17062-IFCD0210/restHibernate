@@ -1,7 +1,6 @@
 package com.ipartek.formacion.ejemplos.restHibernate.controller;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -27,19 +26,14 @@ import com.ipartek.formacion.ejemplos.restHibernate.pojo.Perro;
  */
 @Path("/perro")
 public class PerroController {
-	Date date = new Date();
-	Perro perro = new Perro();
+	private Session s;
 
-	/**
-	 * Devuelve todos los perros de skalada
-	 *
-	 * @return
-	 */
+
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getAll() {		
 		try{
-			Session s = HibernateUtil.getSession();
+			s = HibernateUtil.getSession();
 			s.beginTransaction();
 			ArrayList<Perro> perros = (ArrayList<Perro>)s.createCriteria(Perro.class).list();
 			s.beginTransaction().commit();
@@ -51,50 +45,53 @@ public class PerroController {
 		}
 	}
 
+	
 	@GET
 	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getById(@PathParam("id") int idPerro) {
 
 		try {
-			Perro pPerro = null;
-			Session s = HibernateUtil.getSession();
+			Perro perro = null;
+			s = HibernateUtil.getSession();
 			s.beginTransaction();
-			pPerro = (Perro) s.get(Perro.class, idPerro);			
+			perro = (Perro) s.get(Perro.class, idPerro);			
 			s.beginTransaction().commit();
 			s.close();
-			if(pPerro == null){
-				return Response.status(404).entity(new FechaHora()).build();
+			if(perro == null){
+				return Response.status(404).build();
 			}
-			return Response.ok().entity(pPerro).build();
-
+			return Response.ok().entity(perro).build();
 		} catch (Exception e) {
 			return Response.serverError().build();
-
 		}
 	}
 
+	
 	@DELETE
 	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response delete(@PathParam("id") int idPerro) {
 
 		try {
-			Session s = HibernateUtil.getSession();
-			s.beginTransaction();
-			// simular error interno del servidor error 500
-			if (idPerro <= 0) {
-				throw new Exception("Error Interno 500");
-			}
-			Perro pElimnar = (Perro) s.get(Perro.class, idPerro);
-			s.delete(pElimnar);
+			Perro pElimnar = null;
+			s = HibernateUtil.getSession();
+			s.beginTransaction();			
+			pElimnar = (Perro) s.get(Perro.class, idPerro);
 			s.beginTransaction().commit();
 			s.close();
-			return Response.status(200).entity(new FechaHora()).build();
-
+			if(pElimnar == null){
+				return Response.status(404).build();
+			} else {
+				s = HibernateUtil.getSession();
+				s.beginTransaction();	
+				s.delete(pElimnar);
+				s.beginTransaction().commit();
+				s.close();
+				return Response.status(200).entity(new FechaHora()).build();
+			}
 		} catch (Exception e) {
 			return Response.serverError().build();
-
 		}
 	}
 
@@ -104,14 +101,21 @@ public class PerroController {
 	public Response post(@PathParam("nombre") String nombrePerro,
 						 @PathParam("raza") String razaPerro) {
 		try {
-			Session s = HibernateUtil.getSession();
-			s.beginTransaction();
+			if(nombrePerro.equalsIgnoreCase("") && razaPerro.equalsIgnoreCase("")){
+				return Response.status(204).build();
+			}			
 			Perro pCreado = new Perro(nombrePerro, razaPerro);
-			s.save(pCreado);
+			int idpCreado = 0;
+			s = HibernateUtil.getSession();
+			s.beginTransaction();	
+			idpCreado = (int) s.save(pCreado);
 			s.beginTransaction().commit();
 			s.close();
-
-			return Response.status(201).entity(pCreado).build();
+			if (idpCreado != 0){
+				return Response.status(201).entity(pCreado).build();
+			} else {
+				return Response.status(404).build();
+			}
 
 		} catch (Exception e) {
 			return Response.serverError().build();
@@ -127,20 +131,27 @@ public class PerroController {
 			@PathParam("raza") String razaPerro) {
 
 		try {
-			Session s = HibernateUtil.getSession();
-			s.beginTransaction();
-			// simular error interno del servidor error 500
-			if (idPerro < 0) {
-				throw new Exception("Error Interno 500");
-			}
-			Perro pModificar = (Perro) s.get(Perro.class, idPerro);
-			pModificar.setNombre(nombrePerro);
-			pModificar.setRaza(razaPerro);
-			s.update(pModificar);
+			Perro pModificar = null;
+			if(nombrePerro.equalsIgnoreCase("") && razaPerro.equalsIgnoreCase("")){
+				return Response.status(204).build();
+			}			
+			s = HibernateUtil.getSession();
+			s.beginTransaction();			
+			pModificar = (Perro) s.get(Perro.class, idPerro);
 			s.beginTransaction().commit();
 			s.close();
-
-			return Response.status(200).entity(pModificar).build();
+			if(pModificar == null ){
+				return Response.status(404).build();
+			} else {
+				pModificar.setNombre(nombrePerro);
+				pModificar.setRaza(razaPerro);
+				s = HibernateUtil.getSession();
+				s.beginTransaction();	
+				s.update(pModificar);
+				s.beginTransaction().commit();
+				s.close();
+				return Response.status(200).entity(pModificar).build();
+			}
 
 		} catch (Exception e) {
 			return Response.status(500).build();
