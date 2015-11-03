@@ -1,5 +1,10 @@
 package com.ipartek.formacion.ejemplos.restHibernate.controller;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
+
 import java.util.ArrayList;
 
 import javax.ws.rs.DELETE;
@@ -25,12 +30,21 @@ import com.ipartek.formacion.ejemplos.restHibernate.pojo.Perro;
  *
  */
 @Path("/perro")
+@Api(value = "/perro"  )
 public class PerroController {
 	private Session s;
 
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
+	@ApiOperation(value = "Busca todos los perros",
+	    notes = "decripcion balabalaala",
+	    response = Perro.class,
+	    responseContainer = "List")	
+	@ApiResponses(value = {
+			@ApiResponse(code = 200, message = "Todo OK"),
+			@ApiResponse(code = 500, message = "Error inexperado en el servidor")
+	})
 	public Response getAll() {		
 		try{
 			s = HibernateUtil.getSession();
