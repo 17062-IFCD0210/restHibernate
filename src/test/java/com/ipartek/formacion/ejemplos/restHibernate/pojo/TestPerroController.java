@@ -58,7 +58,11 @@ public class TestPerroController {
 	public void testGetPerro() {
 		assertEquals(this.p.getById(1).getStatus(), 200);
 		assertEquals(this.p.getById(10).getStatus(), 204);
+	}
 
+	@Test
+	public void testUploadPerro() {
+		assertEquals(this.p.put(1, "Toby", "Boxer").getStatus(), 200);
 	}
 
 }
