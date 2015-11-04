@@ -1,15 +1,22 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Perrera Mobile</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Perrera Mobile</title>
 
-<link rel="stylesheet" href="js/jqm/jquery.mobile-1.4.5.min.css">
-<link rel="stylesheet" href="js/jqm/jquery.mobile.simpledialog.css">
-<script src="js/jqm/jquery.js"></script>
-<script src="js/jqm/jquery.mobile-1.4.5.min.js"></script>
-<script src="js/jqm/jquery.mobile.simpledialog2.js"></script>
+	<!--Import Google Icon Font-->
+	<link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">    
+
+	<link rel="stylesheet" href="js/jqm/jquery.mobile-1.4.5.min.css">
+	<link rel="stylesheet" href="js/jqm/jquery.mobile.simpledialog.css">
+<!-- Materialize: http://demo.geekslabs.com/materialize/v2.1/layout01/index.html -->
+	<link rel="stylesheet" href="js/materialize/css/materialize.min.css"  media="screen,projection"/>
+
+	<script src="js/jqm/jquery.js"></script>
+	<script src="js/jqm/jquery.mobile-1.4.5.min.js"></script>
+	<script src="js/jqm/jquery.mobile.simpledialog2.js"></script>
+	<script src="js/materialize/js/materialize.min.js"></script>
 
 </head>
 <body>
@@ -17,8 +24,8 @@
 
 <!-- page HOME -->
 	<div data-role="page" id="home">
-		<div data-role="header">
-			<h2>Perrera</h2>
+		<div class="card-panel blue lighten-1" data-role="header">
+			<h2 class="white-text text-darken-2">Perrera</h2>
 		</div>
 		<div data-role="navbar">
 			<ul>
@@ -191,15 +198,16 @@
 				type: "POST",
 			    url: servicio + 'perro/' + nombre + '/' + raza,
 			    success: function(data) {			    	
-			    	$('#dialog').simpledialog2({
-						mode: 'blank',
-					    headerText: 'Mensaje',
-					    headerClose: true,
-					    blankContent : 
-					      "<p>Perro creado con exito!</p>"+
-					      // NOTE: the use of rel="close" causes this button to close the dialog.
-					      "<a rel='close' data-role='button' href='#'>Cerrar</a>"
-					});
+// 			    	$('#dialog').simpledialog2({
+// 						mode: 'blank',
+// 					    headerText: 'Mensaje',
+// 					    headerClose: true,
+// 					    blankContent : 
+// 					      "<p>Perro creado con exito!</p>"+
+// 					      // NOTE: the use of rel="close" causes this button to close the dialog.
+// 					      "<a rel='close' data-role='button' href='#'>Cerrar</a>"
+// 					});
+					Materialize.toast('Perro creado con exito!', 4000, 'light-blue rounded');
 			    	$.mobile.navigate("#home");
 			    },
 			   	error: function(e) {
