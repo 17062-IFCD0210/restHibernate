@@ -30,59 +30,57 @@ import com.ipartek.formacion.ejemplos.restHibernate.pojo.Perro;
  *
  */
 @Path("/perro")
-@Api(value = "/perro"  )
+@Api(value = "/perro")
 public class PerroController {
 	private Session s;
 
-
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	@ApiOperation(value = "Busca todos los perros",
-	    notes = "decripcion balabalaala",
-	    response = Perro.class,
-	    responseContainer = "List")	
+	@ApiOperation(
+			value = "Listado de perros",
+			notes = "Listado de perros existentes en la perrera, limitado a 1.000",
+			response = Perro.class,
+			// respuesta de tipo Perro
+			responseContainer = "List")
+	// El contenedor es una lista
 	@ApiResponses(value = {
 			@ApiResponse(code = 200, message = "Todo OK"),
-			@ApiResponse(code = 500, message = "Error inexperado en el servidor")
-	})
-	public Response getAll() {		
-		try{
+			@ApiResponse(code = 500, message = "Error inexperado en el servidor")})
+	public Response getAll() {
+		try {
 			s = HibernateUtil.getSession();
 			s.beginTransaction();
-			ArrayList<Perro> perros = (ArrayList<Perro>)s.createCriteria(Perro.class).list();
+			ArrayList<Perro> perros = (ArrayList<Perro>) s.createCriteria(Perro.class).list();
 			s.beginTransaction().commit();
-			s.close();		
-	
+			s.close();
+
 			return Response.ok().entity(perros).build();
-		} catch (Exception e){
+		} catch (Exception e) {
 			return Response.serverError().build();
 		}
 	}
 
-	
 	@GET
 	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
-	@ApiOperation(value = "Busca un perro",
-	    notes = "devuelve un perro mediante el paso de su ID",
-	    response = Perro.class,
-	    responseContainer = "Perro")	
+	@ApiOperation(value = "Busca un perro por su ID",
+	notes = "devuelve un perro mediante el paso de su ID", response = Perro.class, responseContainer = "Perro")
 	@ApiResponses(value = {
 			@ApiResponse(code = 200, message = "Todo OK"),
-			@ApiResponse(code = 404, message = "ID invalido"),
-			@ApiResponse(code = 500, message = "Error inexperado en el servidor")
-	})
+			@ApiResponse(code = 404, message = "No existe Perro con esa ID"),
+			@ApiResponse(code = 500, message = "Error inexperado en el servidor")})
 	public Response getById(@PathParam("id") int idPerro) {
 
 		try {
 			Perro perro = null;
 			s = HibernateUtil.getSession();
 			s.beginTransaction();
-			perro = (Perro) s.get(Perro.class, idPerro);			
+			perro = (Perro) s.get(Perro.class, idPerro);
 			s.beginTransaction().commit();
 			s.close();
-			if(perro == null){
-				return Response.status(404).build();
+			if (perro == null) {
+				// Error 204. Sin contenido para ese id. No lo encuentra
+				return Response.noContent().build();
 			}
 			return Response.ok().entity(perro).build();
 		} catch (Exception e) {
@@ -90,37 +88,35 @@ public class PerroController {
 		}
 	}
 
-	
 	@DELETE
 	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
-	@ApiOperation(value = "Elimina un perro",
-	    notes = "Elimina un perro mediante el paso de su ID",
-	    response = Perro.class,
-	    responseContainer = "FechaHora")	
+	@ApiOperation(value = "Elimina un perro", notes = "Elimina un perro mediante el paso de su ID", response = Perro.class, responseContainer = "FechaHora")
 	@ApiResponses(value = {
 			@ApiResponse(code = 200, message = "Perro eliminado"),
-			@ApiResponse(code = 404, message = "ID invalido"),
-			@ApiResponse(code = 500, message = "Error inexperado en el servidor")
-	})
+			@ApiResponse(code = 404, message = "No existe perro con ese ID"),
+			@ApiResponse(code = 500, message = "Error inexperado en el servidor")})
 	public Response delete(@PathParam("id") int idPerro) {
 
 		try {
 			Perro pElimnar = null;
 			s = HibernateUtil.getSession();
-			s.beginTransaction();			
+			s.beginTransaction();
 			pElimnar = (Perro) s.get(Perro.class, idPerro);
 			s.beginTransaction().commit();
 			s.close();
-			if(pElimnar == null){
-				return Response.status(404).build();
+			if (pElimnar == null) {
+				// Error 204. Sin contenido para ese id. No lo encuentra
+				return Response.noContent().build();
 			} else {
 				s = HibernateUtil.getSession();
-				s.beginTransaction();	
+				s.beginTransaction();
 				s.delete(pElimnar);
 				s.beginTransaction().commit();
 				s.close();
-				return Response.status(200).entity(new FechaHora()).build();
+				// Tiene que devolver un objeto json. Se ha creado un pojo(bean) para que devuelva algo
+				// Response 200 = Ok
+				return Response.ok().entity(new FechaHora()).build();
 			}
 		} catch (Exception e) {
 			return Response.serverError().build();
@@ -130,30 +126,23 @@ public class PerroController {
 	@POST
 	@Path("/{nombre}/{raza}")
 	@Produces(MediaType.APPLICATION_JSON)
-	@ApiOperation(value = "Añade un perro",
-	    notes = "Crea y persiste un nuevo perro",
-	    response = Perro.class,
-	    responseContainer = "Perro")	
+	@ApiOperation(value = "Añade un perro", notes = "Crea y persiste un nuevo perro", response = Perro.class, responseContainer = "Perro")
 	@ApiResponses(value = {
-			@ApiResponse(code = 201, message = "Todo OK"),
-			@ApiResponse(code = 204, message = "Campos vacios"),
-			@ApiResponse(code = 409, message = "Perro existente"),
-			@ApiResponse(code = 500, message = "Error inexperado en el servidor")
-	})
-	public Response post(@PathParam("nombre") String nombrePerro,
-						 @PathParam("raza") String razaPerro) {
+			// En POST se pone el codigo 201 = 200
+			@ApiResponse(code = 201, message = "Perro creado con exito"),
+			// Si hayConflictos en la bbdd
+			@ApiResponse(code = 409, message = "Perro existente, no se puede modificar"),
+			@ApiResponse(code = 500, message = "Error inexperado en el servidor")})
+	public Response post(@PathParam("nombre") String nombrePerro, @PathParam("raza") String razaPerro) {
 		try {
-			if(nombrePerro.equalsIgnoreCase("") && razaPerro.equalsIgnoreCase("")){
-				return Response.status(204).build();
-			}			
 			Perro pCreado = new Perro(nombrePerro, razaPerro);
 			int idpCreado = 0;
 			s = HibernateUtil.getSession();
-			s.beginTransaction();	
+			s.beginTransaction();
 			idpCreado = (int) s.save(pCreado);
 			s.beginTransaction().commit();
 			s.close();
-			if (idpCreado != 0){
+			if (idpCreado != 0) {
 				return Response.status(201).entity(pCreado).build();
 			} else {
 				return Response.status(409).build();
@@ -166,43 +155,36 @@ public class PerroController {
 	@PUT
 	@Path("/{id}/{nombre}/{raza}")
 	@Produces(MediaType.APPLICATION_JSON)
-	@ApiOperation(value = "Modifica un perro",
-		notes = "Modifica un perro ya existente",
-	    response = Perro.class,
-	    responseContainer = "Perro")	
+	@ApiOperation(value = "Modifica un perro", notes = "Modifica un perro ya existente mediante su ID", response = Perro.class, responseContainer = "Perro")
 	@ApiResponses(value = {
-			@ApiResponse(code = 200, message = "Todo OK"),
-			@ApiResponse(code = 204, message = "Campos vacios"),
-			@ApiResponse(code = 404, message = "ID invalido"),
-			@ApiResponse(code = 409, message = "Perro existente"),
-			@ApiResponse(code = 500, message = "Error inexperado en el servidor")
-	})
-	public Response put(@PathParam("id") int idPerro,
-			@PathParam("nombre") String nombrePerro,
-			@PathParam("raza") String razaPerro) {
+			@ApiResponse(code = 200, message = "Modificado correctamente"),
+			@ApiResponse(code = 204, message = "No existe perro con ese ID"),
+			@ApiResponse(code = 409, message = "Perro existente, no se puede modificar"),
+			@ApiResponse(code = 500, message = "Error inexperado en el servidor")})
+	public Response put(@PathParam("id") int idPerro, @PathParam("nombre") String nombrePerro, @PathParam("raza") String razaPerro) {
 		try {
 			Perro pModificar = null;
-			if(nombrePerro.equalsIgnoreCase("") && razaPerro.equalsIgnoreCase("")){
-				return Response.status(204).build();
-			}			
 			s = HibernateUtil.getSession();
-			s.beginTransaction();			
+			s.beginTransaction();
 			pModificar = (Perro) s.get(Perro.class, idPerro);
 			s.beginTransaction().commit();
 			s.close();
-			if(pModificar == null ){
-				return Response.status(404).build();
+			if (pModificar == null) {
+				return Response.noContent().build();
 			} else {
+				//Mete params
 				pModificar.setNombre(nombrePerro);
 				pModificar.setRaza(razaPerro);
 				s = HibernateUtil.getSession();
-				s.beginTransaction();	
+				s.beginTransaction();
+				//Se tendría que haber creado el modelo para que cierre y abra las conexiones y mapee los params
 				s.update(pModificar);
 				s.beginTransaction().commit();
 				s.close();
 				return Response.status(200).entity(pModificar).build();
 			}
 		} catch (Exception e) {
+			//Si casca 500
 			return Response.status(500).build();
 
 		}
