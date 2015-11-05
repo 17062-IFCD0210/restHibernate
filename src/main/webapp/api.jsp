@@ -32,7 +32,7 @@
       if (url && url.length > 1) {
         url = decodeURIComponent(url[1]);
       } else {
-        url = "http://localhost:8080/restHibernate/service/swagger.json";
+        url = "/restHibernate/service/swagger.json";
       }
 
       // Pre load translate...

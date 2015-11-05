@@ -36,8 +36,8 @@
 		</div>
 		<div data-role="footer">
 			
-			<a target="_blank" href="http://localhost:8080/restHibernate/api.jsp">
-				<img src="http://localhost:8080/restHibernate/images/logo_small.png">
+			<a target="_blank" href="http://perrerashift-auraga.rhcloud.com/restHibernate/api.jsp">
+				<img src="http://perrerashift-auraga.rhcloud.com/restHibernate/images/logo_small.png">
 				Documentacion Api
 			</a>
 		</div>
@@ -109,7 +109,7 @@
 
 	<script>
 		/* Antes de carga la HOME, llamar al servicio y rellenar lista */
-		var servicio = "//localhost:8080/restHibernate/service/";
+		var servicio = "/restHibernate/service/";
 		var perros = [];
 		var perro_selec;
 
