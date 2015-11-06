@@ -1,3 +1,2 @@
-The OpenShift `jbossews` cartridge documentation can be found at:
-
-http://openshift.github.io/documentation/oo_cartridge_guide.html#tomcat
+Para que conecte con la base de datos hay que añadir el usuario y password en el fichero: 
+/perrera/src/main/resources/hibernate.cfg.xml

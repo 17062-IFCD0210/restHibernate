@@ -129,8 +129,7 @@ public class PerroController {
 			int idpCreado = 0;
 			this.s = HibernateUtil.getSession();
 			this.s.beginTransaction();
-			// TODO falla por algo de serializar
-			// idpCreado = (int) this.s.save(pCreado);
+			idpCreado = (Integer) this.s.save(pCreado);
 			this.s.save(pCreado);
 			this.s.beginTransaction().commit();
 			this.s.close();
