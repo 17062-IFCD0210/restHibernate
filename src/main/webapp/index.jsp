@@ -110,7 +110,7 @@
 
 	<script>
 		/* Antes de carga la HOME, llamar al servicio y rellenar lista */
-		var servicio = "/perrerashift/service/";
+		var servicio = "/service/";
 		var perros = [];
 		var perro_selec;
 
