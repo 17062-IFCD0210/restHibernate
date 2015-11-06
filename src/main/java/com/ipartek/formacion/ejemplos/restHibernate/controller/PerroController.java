@@ -37,8 +37,7 @@ public class PerroController {
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	@ApiOperation(value = "Listado de Perros", notes = "Listado de perros existentes en la perrera, limitado a 1.000", response = Perro.class, responseContainer = "List")
-	@ApiResponses(value = {
-			@ApiResponse(code = 200, message = "Todo OK"),
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "Todo OK"),
 			@ApiResponse(code = 500, message = "Error inexperado en el servidor") })
 	public Response getAll() {
 		try {
@@ -59,8 +58,7 @@ public class PerroController {
 	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	@ApiOperation(value = "Busca un perro por su ID", notes = "devuelve un perro mediante el paso de su ID", response = Perro.class, responseContainer = "Perro")
-	@ApiResponses(value = {
-			@ApiResponse(code = 200, message = "Todo OK"),
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "Todo OK"),
 			@ApiResponse(code = 204, message = "No existe perro con esa ID"),
 			@ApiResponse(code = 500, message = "Error inexperado en el servidor") })
 	public Response getById(@PathParam("id") int idPerro) {
@@ -129,9 +127,7 @@ public class PerroController {
 			int idpCreado = 0;
 			this.s = HibernateUtil.getSession();
 			this.s.beginTransaction();
-			// TODO falla por algo de serializar
-			// idpCreado = (int) this.s.save(pCreado);
-			this.s.save(pCreado);
+			idpCreado = (Integer) this.s.save(pCreado);
 			this.s.beginTransaction().commit();
 			this.s.close();
 			if (idpCreado != 0) {
