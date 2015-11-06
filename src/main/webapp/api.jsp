@@ -34,7 +34,7 @@
       if (url && url.length > 1) {
         url = decodeURIComponent(url[1]);
       } else {
-        url = "/perrerashift/service/swagger.json";
+        url = "/service/swagger.json";
       }
 
       // Pre load translate...
