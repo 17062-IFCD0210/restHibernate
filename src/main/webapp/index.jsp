@@ -37,7 +37,7 @@
 		</div>
 		<div data-role="footer">
 			
-			<a target="_blank" href="/perrerashift/api.jsp">
+			<a target="_blank" href="/api.jsp">
 				<img src="/perrerashift/images/logo_small.png">
 				Documentacion Api
 			</a>
