@@ -3,6 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <title>API perrera</title>
+ 
+  
   <link rel="icon" type="image/png" href="images/favicon-32x32.png" sizes="32x32" />
   <link rel="icon" type="image/png" href="images/favicon-16x16.png" sizes="16x16" />
   <link href='css/typography.css' media='screen' rel='stylesheet' type='text/css'/>
@@ -32,7 +34,7 @@
       if (url && url.length > 1) {
         url = decodeURIComponent(url[1]);
       } else {
-        url = "/restHibernate/service/swagger.json";
+        url = "/perrerashift/service/swagger.json";
       }
 
       // Pre load translate...

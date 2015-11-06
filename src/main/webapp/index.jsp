@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Perrera Mobile</title>
 
+
 <link rel="stylesheet" href="js/jqm/jquery.mobile-1.4.5.min.css">
 <script src="js/jqm/jquery.js"></script>
 <script src="js/jqm/jquery.mobile-1.4.5.min.js"></script>
@@ -36,8 +37,8 @@
 		</div>
 		<div data-role="footer">
 			
-			<a target="_blank" href="http://perrerashift-auraga.rhcloud.com/restHibernate/api.jsp">
-				<img src="http://perrerashift-auraga.rhcloud.com/restHibernate/images/logo_small.png">
+			<a target="_blank" href="/perrerashift/api.jsp">
+				<img src="/perrerashift/images/logo_small.png">
 				Documentacion Api
 			</a>
 		</div>
@@ -109,7 +110,7 @@
 
 	<script>
 		/* Antes de carga la HOME, llamar al servicio y rellenar lista */
-		var servicio = "/restHibernate/service/";
+		var servicio = "/perrerashift/service/";
 		var perros = [];
 		var perro_selec;
 
