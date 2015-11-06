@@ -9,7 +9,6 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import com.ipartek.formacion.ejemplos.restHibernate.model.HibernateUtil;
 import com.ipartek.formacion.ejemplos.restHibernate.pojo.Perro;
 
 public class TestPerroModel {

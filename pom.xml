@@ -6,7 +6,7 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
 	<name>restHibernate</name>
-	<description>Servicio Rest de Pruebas http://www.mkyong.com/webservices/jax-rs/jersey-hello-world-example/</description>
+	<description>Servicio Rest de Pruebas</description>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
