@@ -7,8 +7,8 @@
 		<!-- Database connection settings -->
 		<property name="connection.driver_class">com.mysql.jdbc.Driver</property>
 		<property name="connection.url">jdbc:mysql://127.11.6.2/perrera</property><!-- Nombre de la BBDD -->
-		<property name="connection.username">username</property>
-		<property name="connection.password">password</property>
+		<property name="connection.username">adminbqCjtk3</property>
+		<property name="connection.password">nGzdX3aNHWya</property>
 		<!-- JDBC connection pool (use the built-in) -->
 		<property name="connection.pool_size">1</property>
 		<!-- SQL dialect -->
