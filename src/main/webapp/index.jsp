@@ -37,8 +37,8 @@
 		</div>
 		<div data-role="footer">
 			
-			<a target="_blank" href="/perrerashift/api.jsp">
-				<img src="/perrerashift/images/logo_small.png">
+			<a target="_blank" href="/api.jsp">
+				<img src="/images/logo_small.png">
 				Documentacion Api
 			</a>
 		</div>
@@ -110,7 +110,7 @@
 
 	<script>
 		/* Antes de carga la HOME, llamar al servicio y rellenar lista */
-		var servicio = "/perrerashift/service/";
+		var servicio = "/service/";
 		var perros = [];
 		var perro_selec;
 
